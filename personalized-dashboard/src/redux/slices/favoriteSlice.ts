@@ -1,26 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { ContentItem } from "@/types/content";
+
+interface FavoritesState {
+  items: ContentItem[];
+}
+
+const initialState: FavoritesState = {
+  items: [],
+};
 
 const favoriteSlice = createSlice({
   name: "favorites",
-  initialState: {
-    items: [],
-  },
+  initialState,
 
   reducers: {
-    addFavorite: (state, action) => {
-      const exists = state.items.some((item: any) => item.id === action.payload.id);
+    addFavorite: (state, action: PayloadAction<ContentItem>) => {
+      const exists = state.items.some(
+        (item) => item.id === action.payload.id
+      );
       if (!exists) {
         state.items.push(action.payload);
       }
     },
 
-    removeFavorite: (state, action) => {
+    removeFavorite: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter(
-        (item: any) => item.id !== action.payload
+        (item) => item.id !== action.payload
       );
     },
 
-    setFavorites: (state, action) => {
+    setFavorites: (state, action: PayloadAction<ContentItem[]>) => {
       state.items = action.payload;
     },
   },

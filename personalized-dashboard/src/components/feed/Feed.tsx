@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setFeedData } from "@/redux/slices/feedSlice";
+import type { ContentItem } from "@/types/content";
 
 import ContentCard from "../cards/ContentCard";
 
@@ -32,15 +33,6 @@ import {
   rectSortingStrategy,
   useSortable,
 } from "@dnd-kit/sortable";
-
-interface FeedItem {
-  id: string;
-  type: string;
-  title: string;
-  description: string;
-  image: string;
-  url?: string;
-}
 
 function SortableCardWrapper({
   id,
@@ -85,7 +77,7 @@ export default function Feed() {
 
   const feedItems = useSelector(
     (state: RootState) => state.feed?.data || []
-  ) as FeedItem[];
+  );
 
   const searchQuery = useSelector(
     (state: RootState) => state.feed?.searchQuery || ""
@@ -173,7 +165,7 @@ export default function Feed() {
             type: "social",
           }));
 
-        const combined: FeedItem[] = [
+        const combined: ContentItem[] = [
           ...formattedNews,
           ...formattedMovies,
           ...formattedSocial,
@@ -194,7 +186,7 @@ export default function Feed() {
   }, [activeCategories, dispatch]);
 
   const filteredItems = feedItems.filter(
-    (item: FeedItem) => {
+    (item: ContentItem) => {
       if (!searchQuery) return true;
 
       const query =
@@ -299,7 +291,7 @@ export default function Feed() {
     }
   };
 
-  const visibleItems: FeedItem[] =
+  const visibleItems: ContentItem[] =
     filteredItems.slice(0, visibleCount);
 
   if (loading) {
@@ -349,14 +341,14 @@ export default function Feed() {
       >
         <SortableContext
           items={visibleItems.map(
-            (item: FeedItem) => item.id
+            (item) => item.id
           )}
           strategy={rectSortingStrategy}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {visibleItems.map(
-                (item: FeedItem) => (
+                (item) => (
                   <motion.div
                     key={item.id}
                     layout
