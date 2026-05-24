@@ -163,15 +163,6 @@ Example:
 - Drag-and-Drop Feed
 
 ---
-
-# 🚀 Deployment
-
-Deploy easily using Vercel.
-
-Official Website: https://vercel.com
-
----
-
 # 📈 Future Improvements
 
 - Real-time live feed updates
