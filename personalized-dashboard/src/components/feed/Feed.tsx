@@ -267,13 +267,13 @@ export default function Feed() {
 
     const oldIndex =
       feedItems.findIndex(
-        (item: FeedItem) =>
+        (item: ContentItem) =>
           item.id === active.id
       );
 
     const newIndex =
       feedItems.findIndex(
-        (item: FeedItem) =>
+        (item: ContentItem) =>
           item.id === over.id
       );
 
